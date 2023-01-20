@@ -6,7 +6,7 @@
 ## **Usage through\<script\>tag**
 Insert in page
 ```html
-<script src="https://femarkdown.github.io/femd.js">
+<script src="https://cdn.jsdelivr.net/gh/femarkdown/femarkdown.github.io/femd.js">
 ```
 You can use the Femd class to call(Support chain call).
 
