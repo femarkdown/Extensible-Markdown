@@ -109,3 +109,32 @@ Result:
 <select><option value='0'>zero</option><option value='1' selected>one</option></select>$[two]{2}
 
 Note: The last line is not converted because of the vulnerability of regular expressions, which also reminds us to check carefully when writing regular expressions.
+
+2. `config.create` The best choice for creating in-line tools.
+
+Structure:
+```javascript
+config.create=[[RegExp,(e)=>{}]...]
+```
+
+Extraordinary:Because it is an inline syntax tool.**RegExp** does not need to match \n.
+
+**Example**:In this example, we will create a phonetic grammar.
+
+There are the following codes
+```markdown
+%[word](pronunciation)
+```
+We need to convert it to
+```html
+<ruby>word<rt>pronunciation</rt></ruby>
+```
+Edit the regular expression and function to get the final config.And compile content using syntax.
+```javascript
+new Femd(["%[apple]([ˈæpl])"]).toDOM({
+	create:[[/\%\[([^\[\]]{1,})\]\(([^\(\)]{1,})\)/g,(e)=>"<ruby>"+e[1]+"<rt>"+e[2]+"</rt></ruby>"]]
+}).mount("#l");
+```
+Result:
+
+<ruby>apple<rt>[ˈæpl]</rt></ruby>
