@@ -47,9 +47,13 @@ femd 1.md 2.json
 ```
 This instruction will generate `1.html` according to the syntax defined in markdown and `2.json`.
 
+***
+
 ## **Docs**
 ### **Custom Syntax**
 **Femd** uses a section of json or object to customize the syntax. We call this section of json or object config.
+
+Note: Anything in config is optional (including itself). You can even hand in an empty object.
 
 You can call your syntax in the following ways.(Browser)
 ```javascript
@@ -61,7 +65,110 @@ femd ***.md config.json
 ```
 Next, the parameters of config will be explained in detail.
 
-1. `config.block`  The most powerful syntax. Use to customize block structure.
+1. Built-in **structure customization**
++ `config.do`: Used to create a leader structure ( like # ...=>\<h\> )
+
+Structure:
+```javascript
+config.do=[char,html[,num]...]
+```
+**char**:An arbitrary string used to identify the structure.
+
+**html**:An html tag (just the first tag).
+
+**num**:Optional parameter. The default value is 0, 0,and no operation is performed. When 1, add\<br\>after the element, when 2, add before the function, and when 3, add both before and after the element
+
+**Example**:In this example, a mark syntax will be created.
+There are the following codes
+```markdown
+@ word
+```
+We need to convert it to
+```html
+<mark>word</mark>
+```
+Edit the regular expression and function to get the final config.And compile content using syntax.
+```javascript
+new Femd(["@ Hello World!"]).toDOM({
+	do:[["@","<mark>"]]
+}).mount("body");
+```
+Result:
+
+<mark>Hello World!</mark>
+
++ `config.make`: Used to create an enclosing structure ( like **=>\<b\> )
+
+Structure:
+```javascript
+config.make=[[char,html]...]
+```
+**Example**:In this example, a mark syntax will be created.
+There are the following codes
+```markdown
+!word!
+```
+We need to convert it to
+```html
+<mark>word</mark>
+```
+Edit the regular expression and function to get the final config.And compile content using syntax.
+```javascript
+new Femd(["!Hello World!"]).toDOM({
+	make:[["!","<mark>"]]
+}).mount("body");
+```
+Result:
+
+<mark>Hello World</mark>
+
+The following exclamation mark is used as identification.
+
+If you want to match, please use \\\\\\\\ (four) escape writing`!Hello World\\\\!!`.
+
++ `config.list` : Used to modify the default label.
+
+Structure:
+```javascript
+config.list={operator:html,...}
+```
+**operator**:Built-in characters are currently supported as follows
+
+|operator|default html|
+|-|-|
+|#|\<h1\>|
+|##|\<h2\>|
+|###|\<h3\>|
+|####|\<h4\>|
+|#####|\<h5\>|
+|######|\<h6\>|
+|**|\<b\>|
+|__|\<b\>|
+|*|\<i\>|
+|_|\<i\>|
+|`|\<code\>|
+|~~|\<s\>|
+|![]()|\<img\>|
+|[]()|\<a\>|
+|---|\<hr\>|
+|***|\<hr\>|
+|___|\<hr\>|
+|===|\<h1\>|
+
+**Example**:In this example, we want to convert all tags with ** accent words into \<div\> and carry id.
+```javascript
+new Femd(["Hello W**orld**!"]).toDOM({
+	list:{"**":"div id='test'"}
+}).mount("body");
+```
+Note: The html parameter also supports pure signature writing.
+
+Result:
+```html
+Hello W<div id='test'>orld</div>!
+```
+
+2. `config.block`  The most powerful syntax. Use to customize block structure.
 
 Structure:
 ```javascript
@@ -106,7 +213,7 @@ Result:
 ```
 Note: The last line is not converted because of the vulnerability of regular expressions, which also reminds us to check carefully when writing regular expressions.
 
-2. `config.create` The best choice for creating in-line tools.
+3. `config.create` The best choice for creating in-line tools.
 
 Structure:
 ```javascript
@@ -134,3 +241,24 @@ new Femd(["%[apple]([ˈæpl])"]).toDOM({
 Result:
 
 <ruby>apple<rt>[ˈæpl]</rt></ruby>
+
+4. **Detail processing**
++ `config.a` : Control the a link. When the parameter is 0, it will not be opened in a new window, otherwise it will be opened in a new window.
++ `config.pre` : This is added to prevent the ambiguity of four spaces. When the value is true, four spaces represent\<pre\>, otherwise, they represent the continuation of the previous line of text or block.
++ `config.footer` : Footnote function. The value of this parameter is a function. It receives a value (the label of the footnote) and returns the id name of the footnote.
+
+**Example**: In this tutorial, we will assign a num-foot-style id to the footnote.
+```javascript
+new Femd(["Hi[^Hi]","","[^Hi]:Femd is amazing!"]).toDOM({
+	footer:(e)=>e+"-foot"
+}).mount("body");
+```
+
+Result:
+```html
+Hi<sup>
+  <abbr id='0-foot' title='Femd is amazing!'>
+    Hi
+  </abbr></sup><br>
+[^Hi]:Femd is amazing!<a href='0-foot'>To</a>
+```
