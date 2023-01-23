@@ -51,7 +51,7 @@ This instruction will generate `1.html` according to the syntax defined in markd
 ### **Custom Syntax**
 **Femd** uses a section of json or object to customize the syntax. We call this section of json or object config.
 
-You can call your syntax in the following ways.
+You can call your syntax in the following ways.(Browser)
 ```javascript
 new Femd(markdown).toDOM(config).mount()
 ```
@@ -97,7 +97,7 @@ Edit the regular expression and function to get the final config.And compile con
 ```javascript
 new Femd(["$[zero]{0}","$[one]{1}!","$[two]{2}"]).toDOM({
 	block:[[/(\$\[.+\]\{.+\}\!?\n)+/g,(e)=>"<select>"+[...e[0].matchAll(/\$\[(.+)\]\{(.+)\}\!?/g)].map(d=>`<option value='${d[2]}'${d[0][d[0].length-1]=="!"?" selected":""}>${d[1]}</option>`).join("\n")+"</select>"]]
-}).mount("#l");
+}).mount("body");
 ```
 Result:
 ```html
@@ -129,7 +129,7 @@ Edit the regular expression and function to get the final config.And compile con
 ```javascript
 new Femd(["%[apple]([ˈæpl])"]).toDOM({
 	create:[[/\%\[([^\[\]]{1,})\]\(([^\(\)]{1,})\)/g,(e)=>"<ruby>"+e[1]+"<rt>"+e[2]+"</rt></ruby>"]]
-}).mount("#l");
+}).mount("body");
 ```
 Result:
 
