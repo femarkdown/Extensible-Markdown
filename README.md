@@ -1,4 +1,8 @@
 # Markdown++(**Femd**)
+![](https://badgen.net/npm/v/femd)
+![](https://badgen.net/npm/license/femd)
+![](https://badgen.net/npm/node/next)
+
 + About
 + ### **Install**
     + Custom Syntax
@@ -6,7 +10,7 @@
 
 *markdown++* is an free and extensible markdown (femd) that allows you to create grammar freely.
 
-You can learn how to use *markdown++* and how to customize syntax at [Markdown++](https://femarkdown.github.io/)(Under construction) or refer to README.md of this project.
+You can learn how to use *markdown++* and how to customize syntax at README.md of this project.
 
 ## **Install**
 ### **Usage through\<script\>tag(Browser)**
@@ -47,6 +51,25 @@ femd 1.md 2.json
 ```
 This instruction will generate `1.html` according to the syntax defined in markdown and `2.json`.
 
+### **About the json in CLI**
+The json parameter refers to the storage file of the custom syntax, that is, the config object referred to below. 
+
+Note: to use json to store the required regular expressions and functions, be sure to use the String () constructor to convert them and save them as strings, and femd will correctly recognize them
+
+Please do not use JSON.stringify, which will damage the object!
+
+**Example** : Example: The config of the selection structure example below is as follows
+```javascript
+{
+	block:[[/(\$\[.+\]\{.+\}\!?\n)+/g,(e)=>"<select>"+[...e[0].matchAll(/\$\[(.+)\]\{(.+)\}\!?/g)].map(d=>`<option value='${d[2]}'${d[0][d[0].length-1]=="!"?" selected":""}>${d[1]}</option>`).join("\n")+"</select>"]]
+}
+```
+We need to use String () to convert separately to get the json file.
+```json
+{
+	"block":[["/(\\$\\[.+\\]\\{.+\\}\\!?\\n)+/g","(e)=>\"<select>\"+[...e[0].matchAll(/\\$\\[(.+)\\]\\{(.+)\\}\\!?/g)].map(d=>`<option value='${d[2]}'${d[0][d[0].length-1]==\"!\"?\" selected\":\"\"}>${d[1]}</option>`).join(\"\\n\")+\"</select>\""]]
+}
+```
 ***
 
 ## **Docs**
@@ -94,9 +117,9 @@ new Femd(["@ Hello World!"]).toDOM({
 }).mount("body");
 ```
 Result:
-
+```html
 <mark>Hello World!</mark>
-
+```
 + `config.make`: Used to create an enclosing structure ( like **=>\<b\> )
 
 Structure:
@@ -119,9 +142,9 @@ new Femd(["!Hello World!"]).toDOM({
 }).mount("body");
 ```
 Result:
-
+```html
 <mark>Hello World</mark>
-
+```
 The following exclamation mark is used as identification.
 
 If you want to match, please use \\\\\\\\ (four) escape writing`!Hello World\\\\!!`.
