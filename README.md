@@ -6,19 +6,14 @@
 
 *markdown++* is an free and extensible markdown (femd) that allows you to create grammar freely.
 
-You can learn how to use *markdown++* and how to customize syntax at [Markdown++](https://femarkdown.github.io/) or refer to README.md of this project.
+You can learn how to use *markdown++* and how to customize syntax at [Markdown++](https://femarkdown.github.io/)(Under construction) or refer to README.md of this project.
 
 ## **Install**
-### **Usage through\<script\>tag**
+### **Usage through\<script\>tag(Browser)**
 Insert in page
 ```html
-<script src="https://cdn.jsdelivr.net/gh/femarkdown/femarkdown.github.io/femd.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/femarkdown/Extensible-Markdown/femd.js"></script>
 ```
-or
-```html
-<script src="https://femarkdown.github.io/femd.js"></script>
-```
-The above two methods are equivalent.
 
 You can use the Femd class to call(Support chain call).
 
@@ -28,7 +23,7 @@ new Femd(["# Hello World!"]).toDOM().mount("#main")
 //Convert the list to a DOM element using the default syntax and insert it into #main.
 ```
 
-### **Install tools through npm**
+### **Install tools through npm(CLI)**
 
 **femd** is a tool for *markdown++*.
 
