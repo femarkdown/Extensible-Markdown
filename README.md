@@ -100,9 +100,10 @@ new Femd(["$[zero]{0}","$[one]{1}!","$[two]{2}"]).toDOM({
 }).mount("#l");
 ```
 Result:
-
-<select><option value='0'>zero</option><option value='1' selected>one</option></select>$[two]{2}
-
+```html
+<select><option value='0'>zero</option>
+<option value='1' selected>one</option></select>$[two]{2}
+```
 Note: The last line is not converted because of the vulnerability of regular expressions, which also reminds us to check carefully when writing regular expressions.
 
 2. `config.create` The best choice for creating in-line tools.
