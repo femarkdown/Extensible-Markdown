@@ -16,7 +16,7 @@ You can learn how to use *markdown++* and how to customize syntax at README.md o
 ### **Usage through\<script\>tag(Browser)**
 Insert in page
 ```html
-<script src="https://cdn.jsdelivr.net/gh/femarkdown/Extensible-Markdown/femd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/femd/femd.js"></script>
 ```
 
 You can use the Femd class to call(Support chain call).
@@ -283,5 +283,5 @@ Hi<sup>
   <abbr id='0-foot' title='Femd is amazing!'>
     Hi
   </abbr></sup><br>
-[^Hi]:Femd is amazing!<a href='0-foot'>To</a>
+[^Hi]:Femd is amazing!<a href='#0-foot'>To</a>
 ```
