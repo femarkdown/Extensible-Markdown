@@ -1,4 +1,6 @@
 # Markdown++(**Femd**)
+**After v2.0.0** : The JavaScript File less than 19 KB, **lighter**, **faster** and **do more**
+
 ![](https://badgen.net/npm/v/femd)
 ![](https://badgen.net/npm/license/femd)
 ![](https://badgen.net/npm/node/next)
