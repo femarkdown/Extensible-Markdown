@@ -1,5 +1,5 @@
 /**
- * femd v2.0.0 - A tool for markdown++.
+ * femd v2.1.0 - A tool for markdown++.
  * Copyright (c) 2011-2023, Sifer. (MIT Licensed)
  * https://github.com/femarkdown/Extensible-Markdown
  */
@@ -112,12 +112,12 @@ class Femd{
                 [Rex[">"],l_k=>{
                     var k=l_k;
                     if(k["index"]==this.n[0].length&&this.n[0].search(/ *(> *[^<\n]+(\n *> *[^<\n]+)*)|\n *> *<.*>/g)+1){
-                        k[0]=this.n[0]+k[0];k["index"]=0
+                        k[0]=k[0];k["index"]=0
                     }
                     var p=k[0].split("\n").filter(i=>i!="");
                     var t=p.map(r=>r.match(/(>| {0,4})+/g)[0].replaceAll(" ","").length);
                     var g=0;
-                    t=t.map((r,y)=>{if(y==0){return 0}else{if(r>g){g=r;return r}else{return g}}});
+                    t=t.map((r,y)=>{if(r>g){g=r;return r}else{return g}});
                     var u=p.map((i,j)=>[i.slice(i.search(/ *>+/g)+i.match(/ *>+/g)[0].length).trimStart(),t[j]]);
                     var r="";var f=[];
                     u.map((e,q)=>{
@@ -143,7 +143,6 @@ class Femd{
         if(config.make){
             config.make.map(e=>{if(["&#","&","#",";",";&",";&#"].includes(e[0])){throw "Error on toHTML"}})
         }
-        if([1,2].concat([8,9]).toString()==Array.from(new Set([1,2].concat([8,9]))).toString())
         var splice=(str,a,b,c)=>{var g=str.split("");g.splice(a,b,c);return g.join("")};
         var toHTML_Str=(str)=>str.split("").map(e=>"&#"+e.charCodeAt(0)+";").join("");
         var isASCII=(s)=>s.charCodeAt(0)<127;

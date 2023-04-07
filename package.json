@@ -1,0 +1,25 @@
+{
+  "name": "femd",
+  "version": "2.1.0",
+  "description": "A Tiny light fast tool for free markdown with customizable syntax.",
+  "main": "femd-cli.js",
+  "bin": {
+    "femd": "./femd-cli.js"
+  },
+  "keywords": [
+    "markdown",
+    "markup",
+    "cli",
+    "html"
+  ],
+  "tags":[
+    "markdown",
+    "markup",
+    "cli",
+    "html"
+  ],
+  "repository": "femarkdown/Extensible-Markdown",
+  "homepage": "https://femarkdown.github.io",
+  "author": "Sifer",
+  "license": "MIT"
+}

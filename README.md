@@ -1,19 +1,21 @@
 <img src="https://femarkdown.github.io/ass/femd.png" style="width:100px;"></img>
-# Markdown++(**Femd**)
+# Markdown++(Femd)
 **After v2.0.0** : The JavaScript File less than 19 KB, **lighter**, **faster** and **do more**
 
 ![](https://badgen.net/npm/v/femd)
 ![](https://badgen.net/npm/license/femd)
 ![](https://badgen.net/npm/node/next)
 
-+ About
-+ ### **Install**
-    + Custom Syntax
-## **What is *markdown++***?
+Femd is a tool for *markdown++*.
 
-*markdown++* is an free and extensible markdown (femd) that allows you to create grammar freely.
+You can use it to easily convert `markdown++` to `html`.
+
+### **What is *markdown++***?
+
+markdown++ is an free and extensible markdown (femd) that allows you to create grammar freely
 
 Learn more about custom grammar methods or usage methods in the **official website document** [Markdown++](https://femarkdown.github.io/).
+
 
 ## **Install**
 ### **Usage through\<script\>tag(Browser)**
