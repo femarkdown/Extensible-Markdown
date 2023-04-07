@@ -2,7 +2,7 @@
   "name": "femd",
   "version": "2.1.0",
   "description": "A Tiny light fast tool for free markdown with customizable syntax.",
-  "main": "femd.js",
+  "main": "femd.min.js",
   "bin": {
     "femd": "./femd-cli.js"
   },
