@@ -5,15 +5,13 @@
  */
 class Femd{
     constructor(n){
-        switch(Object.prototype.toString.call(n)){
-            case "[object String]":
-                this.n=n.split("\n");
-                this.md=n.split("\n");
-                break
-            case "[object Array]":
-                this.n=n;
-                this.md=n;
-                break
+        var t=Object.prototype.toString.call(n);
+        if(t=="[object String]"){
+            this.n=n.split("\n");
+            this.md=n.split("\n");
+        }else if(t=="[object Array]"){
+            this.n=n;
+            this.md=n;
         }
     }
     toDOM(config={}){
@@ -41,9 +39,9 @@ class Femd{
             "+.":/(?<=<.+> *|\n *|\n|^)((\+|\-|\*) +[^<\n]+(\n *(\+|\-|\*) +[^<\n]+)*)|(\+|\-|\*) +<.*>/g,
             ">":/\n *(> *[^<\n]+(\n *> *[^<\n]+)*)|\n *> *<.*>/g,
             "[^]":/\[\^.{1,}\] *\: *.{1,}/g
-        }
+        };
         var doable=true;
-        if(!config.list){config.list={}}
+        if(!config.list){config.list={}};
         var y_list={"#":"h1","##":"h2","###":"h3","####":"h4","#####":"h5","######":"h6","**":"b","__":"b","_":"i","*":"i","`":"code","~~":"s","![]()":"img","[]()":"a","---":"hr","___":"hr","***":"hr","===":"h1"};
         Object.assign(y_list,config.list);
         config.list=y_list;
@@ -111,9 +109,6 @@ class Femd{
                 },1],
                 [Rex[">"],l_k=>{
                     var k=l_k;
-                    if(k["index"]==this.n[0].length&&this.n[0].search(/ *(> *[^<\n]+(\n *> *[^<\n]+)*)|\n *> *<.*>/g)+1){
-                        k[0]=k[0];k["index"]=0
-                    }
                     var p=k[0].split("\n").filter(i=>i!="");
                     var t=p.map(r=>r.match(/(>| {0,4})+/g)[0].replaceAll(" ","").length);
                     var g=0;
@@ -135,14 +130,14 @@ class Femd{
                     return r
                 },1]
             ]
-        }
+        };
         if(config.block){config.block=config.block.concat(config_d.block)}else{config.block=config_d.block};
         if(config.make){config.make=config.make.concat(config_d.make)}else{config.make=config_d.make};
         if(config.do){config.do=config.do.concat(config_d.do)}else{config.do=config_d.do};
         if(config.create){config.create=config.create.concat(config_d.create)}else{config.create=config_d.create};
         if(config.make){
             config.make.map(e=>{if(["&#","&","#",";",";&",";&#"].includes(e[0])){throw "Error on toHTML"}})
-        }
+        };
         var splice=(str,a,b,c)=>{var g=str.split("");g.splice(a,b,c);return g.join("")};
         var toHTML_Str=(str)=>str.split("").map(e=>"&#"+e.charCodeAt(0)+";").join("");
         var isASCII=(s)=>s.charCodeAt(0)<127;
@@ -150,11 +145,11 @@ class Femd{
             var a0=e.match(/^(<[^<>]+?>)*/g)[0];
             var a1=e.match(/(<[^><]+?>)*$/g)[0];
             return [a0,e.slice(a0.length,e.length-(a1.length)),a1]
-        }
+        };
         var pre_make=false;
         var block_pre_make=false;
         var h_making=this.n.join("\n");//结构化
-        h_making=h_making.replaceAll("\r","")
+        h_making=h_making.replaceAll("\r","");
         if(!config.pre){h_making=h_making.replaceAll("\n    ","&#10;")};
         var b=0;
         var Smake_list={};//脚注列表
@@ -165,8 +160,8 @@ class Femd{
         if(config.block){//block:[RegExp,(e)=>{},type=0|1]
             config.block.map(w=>{
                 var o=w;
-                if(Object.prototype.toString.call(w[0]).slice(8,-1)=="String"){o[0]=o[0][o[0].length-1]=="g"?eval(o[0]):RegExp(o[0],"g")}
-                if(Object.prototype.toString.call(w[1]).slice(8,-1)=="String"){o[1]=eval(o[1])}
+                if(Object.prototype.toString.call(w[0]).slice(8,-1)=="String"){o[0]=o[0][o[0].length-1]=="g"?eval(o[0]):RegExp(o[0],"g")};
+                if(Object.prototype.toString.call(w[1]).slice(8,-1)=="String"){o[1]=eval(o[1])};
                 if(o[2]){
                     while([...h_making.matchAll(o[0])].length>0){
                         var b=0;
@@ -187,13 +182,13 @@ class Femd{
                     })
                 }
             })
-        }
-        this.n=h_making.split("\n")
+        };
+        this.n=h_making.split("\n");
         this.n=this.n.map((e,q)=>{
         doable=true;
         if(sl(e)[1].slice(0,4)=="    "&&block_pre_make==false&&config.pre){
             e=e.slice(4);
-            if(!pre_make){e="<pre>"+toHTML_Str(e);}else{e=toHTML_Str(e)}
+            if(!pre_make){e="<pre>"+toHTML_Str(e);}else{e=toHTML_Str(e)};
             if(this.n[q+1]){
                 if(this.n[q+1].slice(0,4)=="    "){
                     pre_make=true;
@@ -212,7 +207,7 @@ class Femd{
                 config.do.map(p=>{
                     if(doable){
                         var o=p[1].replace(">","").replace("<","");
-                        try{var d_m=new RegExp(" *"+p[0]+" +","g")}catch(err){var d_m=new RegExp(" *["+p[0][0]+"]{"+p[0].length+"} {1,}","g")}
+                        try{var d_m=new RegExp(" *"+p[0]+" +","g")}catch(err){var d_m=new RegExp(" *["+p[0][0]+"]{"+p[0].length+"} {1,}","g")};
                         if(sl(e)[1].search(d_m)==0){
                             e=sl(e)[0]+sl(e)[1].replace(d_m,e.match(new RegExp(" *"+p[0][0],"g"))[0].slice(0,-1)+`<${o}>`)+`</${o.indexOf(" ")==-1?o:o.slice(0,o.indexOf(" "))}>`+sl(e)[2];
                             if(p.length>2){
@@ -244,23 +239,23 @@ class Femd{
                         b+=("<"+m+">"+e[1].replaceAll(e[0][0],toHTML_Str(e[0][0]))+"</"+(m.indexOf(" ")==-1?m:m.slice(0,m.indexOf(" ")))+">").length-e[0].length;
                     });//<char>=><html>
                 })
-            }
+            };
             if(config.create){//[RegExp,(e)=>{处理函数}]
                 config.create.map(w=>{
                     var t=w;
-                    if(Object.prototype.toString.call(w[0]).slice(8,-1)=="String"){t[0]=t[0][t[0].length-1]=="g"?eval(t[0]):RegExp(t[0],"g")}
-                    if(Object.prototype.toString.call(w[1]).slice(8,-1)=="String"){t[1]=eval(t[1])}
+                    if(Object.prototype.toString.call(w[0]).slice(8,-1)=="String"){t[0]=t[0][t[0].length-1]=="g"?eval(t[0]):RegExp(t[0],"g")};
+                    if(Object.prototype.toString.call(w[1]).slice(8,-1)=="String"){t[1]=eval(t[1])};
                     b=0;
                     [...g.matchAll(t[0])].map(e=>{
                         var l_1=g.length;
-                        g=splice(g,e["index"]+b,e[0].length,t[1](e))
+                        g=splice(g,e["index"]+b,e[0].length,t[1](e));
                         var l_2=g.length;
                         b+=l_2-l_1;
                     })//[RegExp]=>(e)
                 })
             }
             return g
-        }
+        };
         for(var i=0;i<this.n.length;i++){
             this.n[i]=amake_0(this.n[i]);//**=><b>;*=><i>;~~=><s>...
             if(this.n[i].search(Rex["---"])!=-1&&i>0){
@@ -300,11 +295,11 @@ class Femd{
                 for(var g=i+1;g<this.n.length;g++){
                     if(this.n[g].search(/ {0,}`{3} {0,}/g)==0){
                         if(this.n[g].match(/ {0,}`{3} {0,}/g)[0]==this.n[g]){
-                            this.n[i]=this.n[i].match(/( |<[A-z \=\'\"]{1,}>){0,}`/g)[0].slice(0,-1)+`<pre class='${o?"pre "+o:"pre"}'>`
+                            this.n[i]=this.n[i].match(/( |<[A-z \=\'\"]{1,}>){0,}`/g)[0].slice(0,-1)+`<pre class='${o?"pre "+o:"pre"}'>`;
                             block_pre_make=g;
                             for(var y=i+1;y<g;y++){
                                 this.n[y]=toHTML_Str(this.n[y])+"\n"
-                            }
+                            };
                             break
                         }
                     }
@@ -314,25 +309,25 @@ class Femd{
         this.n.map((e,q)=>{if(e==""){this.n[q]="<br>"};
             if(e.search(Rex["[^]"])==0){
                 if(e.match(Rex["[^]"])==this.n[q]){
-                    var b_i=e.slice(e.match(/\[\^.{1,}\] *\: */g)[0].length).trimEnd()
+                    var b_i=e.slice(e.match(/\[\^.{1,}\] *\: */g)[0].length).trimEnd();
                     Smake_list[e.match(/\[\^.{1,}\]/g)[0].slice(2,-1)]=b_i;
                     this.n[q]+=`<a href='${config.footer?config.footer(Object.keys(Smake_list).length-1):("#footor-m"+(Object.keys(Smake_list).length-1))}'>↩︎</a>`;
                 }
             }
-        })
+        });
         this.n.forEach((e,q)=>{
             if(e.search(/\[\^.{1,}\]/g)!=0&&e.search(Rex["[^]"])!=0){
                 var b=0;
                 [...e.matchAll(/\[\^.{1,}\]/g)].map(k=>{
                     if(Smake_list[k[0].slice(2,-1)]){
                         var g_1=this.n[q].length;
-                        this.n[q]=splice(e,k["index"]+b,k[0].length,`<sup><abbr id='${config.footer?config.footer(Object.keys(Smake_list).indexOf(k[0].slice(2,-1))):("footor-m"+Object.keys(Smake_list).indexOf(k[0].slice(2,-1)))}' title='${Smake_list[k[0].slice(2,-1)]}'>${k[0].slice(2,-1)}</abbr></sup>`)
+                        this.n[q]=splice(e,k["index"]+b,k[0].length,`<sup><abbr id='${config.footer?config.footer(Object.keys(Smake_list).indexOf(k[0].slice(2,-1))):("footor-m"+Object.keys(Smake_list).indexOf(k[0].slice(2,-1)))}' title='${Smake_list[k[0].slice(2,-1)]}'>${k[0].slice(2,-1)}</abbr></sup>`);
                         var g_2=this.n[q].length;
                         b+=g_2-g_1;
                     }
                 })
             }
-        })
+        });
         return this;
     }
     r(t=1,k=0){
@@ -340,13 +335,13 @@ class Femd{
     }
     name(s){this.name=s;return this;}
     bind(el){
-        if(this.n){el.innerHTML=this.n.join("");console.log(this.md.join("\n"));console.log(this.n);console.log(this.n.join(""));}else{throw "NONE DOM or MD"}
+        if(this.n){el.innerHTML=this.n.join("");console.log(this.md.join("\n"));console.log(this.n);console.log(this.n.join(""));}else{throw "NONE DOM or MD"};
         return this;
     }
     mount(q){
         if(this.n){document.querySelector(q).innerHTML=this.n.join("");console.log(this.md.join("\n"));console.log(this.n);console.log(this.n.join(""));
-        }else{throw "NONE DOM or MD"}
+        }else{throw "NONE DOM or MD"};
         return this;
     }
-}
-try{module.exports=Femd}catch(err){}
+};
+try{module.exports=Femd}catch(err){};
