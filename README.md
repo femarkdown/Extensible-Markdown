@@ -4,7 +4,6 @@
 
 ![](https://badgen.net/npm/v/femd)
 ![](https://badgen.net/npm/license/femd)
-![](https://badgen.net/npm/node/next)
 
 Femd is a tool for *markdown++*.
 
