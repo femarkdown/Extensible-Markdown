@@ -21,7 +21,7 @@ Learn more about custom grammar methods or usage methods in the **official websi
 ### **Usage through\<script\>tag(Browser)**
 Insert in page
 ```html
-<script src="https://cdn.jsdelivr.net/npm/femd/femd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/femd"></script>
 ```
 
 You can use the Femd class to call(Support chain call).
