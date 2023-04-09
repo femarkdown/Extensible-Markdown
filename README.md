@@ -1,4 +1,3 @@
-![](https://femarkdown.github.io/ass/femd3.png)
 # Markdown++(Femd)
 **Fast speed**, **small size**, **strong compatibility**, and **customizable grammar** Markdown note conversion tool or text tool.
 
