@@ -150,7 +150,7 @@ class Femd{
         var block_pre_make=false;
         var h_making=this.n.join("\n");//结构化
         h_making=h_making.replaceAll("\r","");
-        if(!config.pre){h_making=h_making.replaceAll("\n    ","&#10;")};
+        //if(!config.pre){h_making=h_making.replaceAll("\n    ","&#10;")};
         var b=0;
         var Smake_list={};//脚注列表
         [...h_making.matchAll(/\\.{1}/g)].map(e=>{
@@ -297,9 +297,9 @@ class Femd{
                         if(this.n[g].match(/ {0,}`{3} {0,}/g)[0]==this.n[g]){
                             this.n[i]=this.n[i].match(/( |<[A-z \=\'\"]{1,}>){0,}`/g)[0].slice(0,-1)+`<pre class='${o?"pre "+o:"pre"}'>`;
                             block_pre_make=g;
-                            for(var y=i+1;y<g;y++){
+                            /*for(var y=i+1;y<g;y++){
                                 this.n[y]=toHTML_Str(this.n[y])+"\n"
-                            };
+                            };*/
                             break
                         }
                     }
