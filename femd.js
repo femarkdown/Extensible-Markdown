@@ -13,6 +13,7 @@ class Femd{
             this.n=n;
             this.md=n;
         }
+        this.debug=!!arguments[1];
     }
     toDOM(config={}){
         var Rex={
@@ -149,6 +150,7 @@ class Femd{
         var pre_make=false;
         var block_pre_make=false;
         var h_making=this.n.join("\n");//结构化
+        if(config.stream){h_making=h_making.split("").map(e=>config.stream(e)).join("")}
         h_making=h_making.replaceAll("\r","");
         //if(!config.pre){h_making=h_making.replaceAll("\n    ","&#10;")};
         var b=0;
@@ -335,11 +337,11 @@ class Femd{
     }
     name(s){this.name=s;return this;}
     bind(el){
-        if(this.n){el.innerHTML=this.n.join("");console.log(this.md.join("\n"));console.log(this.n);console.log(this.n.join(""));}else{throw "NONE DOM or MD"};
+        if(this.n){el.innerHTML=this.n.join("");if(this.debug){console.log(this.md.join("\n"));console.log(this.n);console.log(this.n.join(""));}}else{throw "NONE DOM or MD"};
         return this;
     }
     mount(q){
-        if(this.n){document.querySelector(q).innerHTML=this.n.join("");console.log(this.md.join("\n"));console.log(this.n);console.log(this.n.join(""));
+        if(this.n){document.querySelector(q).innerHTML=this.n.join("");if(this.debug){console.log(this.md.join("\n"));console.log(this.n);console.log(this.n.join(""));}
         }else{throw "NONE DOM or MD"};
         return this;
     }
