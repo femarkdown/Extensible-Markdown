@@ -1,5 +1,5 @@
 /**
- * femd v2.1.0 - A tool for markdown++.
+ * femd v2.2.0 - A tool for markdown++.
  * Copyright (c) 2011-2023, Sifer. (MIT Licensed)
  * https://github.com/femarkdown/Extensible-Markdown
  */
@@ -155,10 +155,10 @@ class Femd{
         //if(!config.pre){h_making=h_making.replaceAll("\n    ","&#10;")};
         var b=0;
         var Smake_list={};//脚注列表
-        [...h_making.matchAll(/\\.{1}/g)].map(e=>{
+        /*[...h_making.matchAll(/\\.{1}/g)].map(e=>{
             h_making=splice(h_making,e["index"]+b,e[0].length,isASCII(e[0].replaceAll("\\",""))?toHTML_Str(e[0].replaceAll("\\","")):e[0].replaceAll("\\",""));
             b+=(isASCII(e[0].replaceAll("\\",""))?toHTML_Str(e[0].replaceAll("\\","")):e[0].replaceAll("\\","")).length-e[0].length;
-        });//  \ASCII字符转义 example:\\<div>=>&#60;div>
+        });//  \ASCII字符转义 example:\\<div>=>&#60;div>*/
         if(config.block){//block:[RegExp,(e)=>{},type=0|1]
             config.block.map(w=>{
                 var o=w;

@@ -1,5 +1,5 @@
 /**
- * FemdCore v2.1.0 - A tool for markdown++.
+ * FemdCore v2.2.0 - A tool for markdown++.
  * Copyright (c) 2011-2023, Sifer. (MIT Licensed)
  * https://github.com/femarkdown/Extensible-Markdown
  */
