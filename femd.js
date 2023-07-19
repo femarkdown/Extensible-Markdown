@@ -62,7 +62,7 @@ class Femd{
                     var j=k[0].split("\n")[0].replace("\\|","").split("|").length-1;
                     if(k[0].split("\n").every(e=>e.replace("\\|","").split("|").length-1==j)&&k[0].split("\n")[1].split("|").slice(1,-1).every(p=>[...p.trim().matchAll(":")].every(o=>[0,p.trim().length-1].includes(o["index"])))){
                         var l=k[0].split("\n").map(e=>e.replace("\\|",toHTML_Str("|"))).map(e=>e.split("|").slice(1,-1));
-                        var t="<tr>";l[0].map(p=>{t+="<th>"+p+"</th>"});t+="</tr>";
+                        var t="<tr>";l[0].map(p=>{t+=`<th style='text-align:${i[q]}'>`+p+"</th>"});t+="</tr>";
                         var i=l[1].map(r=>["left","right","left"][[0,r.trim().length-1,-1].indexOf(r.trim().indexOf(":"))]);
                         l[1].map((f,d)=>{if(f.trim()[0]==":"&&f[f.trimEnd().length-1]==":"){i[d]="center"}});
                         l.slice(2).map(u=>{t+="<tr>";u.map((y,q)=>{t+=`<td style='text-align:${i[q]}'>`+y+"</td>"});t+="</tr>"});
@@ -144,7 +144,7 @@ class Femd{
         };
         var splice=(str,a,b,c)=>{var g=str.split("");g.splice(a,b,c);return g.join("")};
         var toHTML_Str=(str)=>str.split("").map(e=>"&#"+e.charCodeAt(0)+";").join("");
-        var isASCII=(s)=>s.charCodeAt(0)<127;
+        //var isASCII=(s)=>s.charCodeAt(0)<127;
         var sl=(e)=>{
             var a0=e.match(/^(<[^<>]+?>)*/g)[0];
             var a1=e.match(/(<[^><]+?>)*$/g)[0];
