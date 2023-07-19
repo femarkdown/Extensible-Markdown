@@ -55,7 +55,8 @@ class Femd{
                 [Rex["[]()"],(e)=>{
                     var j=g_tag("[]()");
                     return `<${j} href='${e[2]}'${config.a==0?"":"target='_blank'"}>${e[1]}</${j.indexOf(" ")==-1?j:j.slice(0,j.indexOf(" "))}>`
-                }]
+                }],
+                [/- *\[ *([Xx]{0,1}) *\]/g,(i)=>`<input type="checkbox"${i[1].length?` checked="true"`:""}>`]
             ],
             block:[
                 [Rex["||"],k=>{
