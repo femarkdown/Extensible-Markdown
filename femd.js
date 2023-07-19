@@ -62,9 +62,9 @@ class Femd{
                     var j=k[0].split("\n")[0].replace("\\|","").split("|").length-1;
                     if(k[0].split("\n").every(e=>e.replace("\\|","").split("|").length-1==j)&&k[0].split("\n")[1].split("|").slice(1,-1).every(p=>[...p.trim().matchAll(":")].every(o=>[0,p.trim().length-1].includes(o["index"])))){
                         var l=k[0].split("\n").map(e=>e.replace("\\|",toHTML_Str("|"))).map(e=>e.split("|").slice(1,-1));
-                        var t="<tr>";l[0].map(p=>{t+=`<th style='text-align:${i[q]}'>`+p+"</th>"});t+="</tr>";
                         var i=l[1].map(r=>["left","right","left"][[0,r.trim().length-1,-1].indexOf(r.trim().indexOf(":"))]);
                         l[1].map((f,d)=>{if(f.trim()[0]==":"&&f[f.trimEnd().length-1]==":"){i[d]="center"}});
+                        var t="<tr>";l[0].map((p,q)=>{t+=`<th style='text-align:${i[q]}'>`+p+"</th>"});t+="</tr>";
                         l.slice(2).map(u=>{t+="<tr>";u.map((y,q)=>{t+=`<td style='text-align:${i[q]}'>`+y+"</td>"});t+="</tr>"});
                         return `<table>${t}</table>`;
                     }
@@ -169,7 +169,7 @@ class Femd{
                 if(Object.prototype.toString.call(w[1]).slice(8,-1)=="String"){o[1]=eval(o[1])};
                 if(o[2]){
                     while([...h_making.matchAll(o[0])].length>0){
-                        var b=0;
+                        b=0;
                         [...h_making.matchAll(o[0])].map(l=>{
                             var f_1=h_making.length;
                             h_making=splice(h_making,l["index"]+b,l[0].length,o[1](l));
@@ -178,7 +178,7 @@ class Femd{
                         })
                     }
                 }else{
-                    var b=0;
+                    b=0;
                     [...h_making.matchAll(o[0])].map(l=>{
                         var f_1=h_making.length;
                         h_making=splice(h_making,l["index"]+b,l[0].length,o[1](l));
@@ -322,7 +322,7 @@ class Femd{
         });
         this.n.forEach((e,q)=>{
             if(e.search(/\[\^.{1,}\]/g)!=0&&e.search(Rex["[^]"])!=0){
-                var b=0;
+                b=0;
                 [...e.matchAll(/\[\^.{1,}\]/g)].map(k=>{
                     if(Smake_list[k[0].slice(2,-1)]){
                         var g_1=this.n[q].length;
