@@ -191,6 +191,7 @@ class Femd{
         this.n=h_making.split("\n");
         this.n=this.n.map((e,q)=>{
         doable=true;
+        e=e.replaceAll("\\<",toHTML_Str("<")).replaceAll("\\>",toHTML_Str(">"));
         if(sl(e)[1].slice(0,4)=="    "&&block_pre_make==false&&config.pre){
             e=e.slice(4);
             if(!pre_make){e="<pre>"+toHTML_Str(e);}else{e=toHTML_Str(e)};
@@ -262,37 +263,39 @@ class Femd{
             return g
         };
         for(var i=0;i<this.n.length;i++){
-            this.n[i]=amake_0(this.n[i]);//**=><b>;*=><i>;~~=><s>...
-            if(this.n[i].search(Rex["---"])!=-1&&i>0){
-                if(this.n[i].trim().replaceAll("-","")==""&&this.n[i].split("").filter(e=>e=="-").length>=3&&this.n[i-1]!=""&&this.n[i-1].search(/<h[1-9]{1}>/g)!=0){//---=><h2>
-                    var j=config.list["##"]?config.list["##"].replace(">","").replace("<",""):"h2";
-                    this.n[i-1]=`<${j}>`+this.n[i-1]+`</${j.indexOf(" ")==-1?j:j.slice(0,j.indexOf(" "))}>`;
-                    this.n[i]="";
-                }else if(this.n[i].match(Rex["---"])[0]==this.n[i]){//---=><hr>
+            if(block_pre_make==false){
+                this.n[i]=amake_0(this.n[i]);//**=><b>;*=><i>;~~=><s>...
+                if(this.n[i].search(Rex["---"])!=-1&&i>0){
+                    if(this.n[i].trim().replaceAll("-","")==""&&this.n[i].split("").filter(e=>e=="-").length>=3&&this.n[i-1]!=""&&this.n[i-1].search(/<h[1-9]{1}>/g)!=0){//---=><h2>
+                        var j=config.list["##"]?config.list["##"].replace(">","").replace("<",""):"h2";
+                        this.n[i-1]=`<${j}>`+this.n[i-1]+`</${j.indexOf(" ")==-1?j:j.slice(0,j.indexOf(" "))}>`;
+                        this.n[i]="";
+                    }else if(this.n[i].match(Rex["---"])[0]==this.n[i]){//---=><hr>
+                        var j=config.list["---"]?config.list["---"].replace(">","").replace("<",""):"hr";
+                        this.n[i]=`<${j}>`;
+                    }
+                }else if(this.n[i].trim().replaceAll("=","")==""&&this.n[i].split("").filter(e=>e=="=").length>=3&&i>0){// === =><h1>
+                    if(this.n[i-1]!=""&&this.n[i-1].search(/<h[1-9]{1}>/g)!=0){
+                        var j=config.list["==="]?config.list["==="].replace(">","").replace("<",""):"h1";
+                        this.n[i-1]=`<${j}>`+this.n[i-1]+`</${j.indexOf(" ")==-1?j:j.slice(0,j.indexOf(" "))}>`;
+                        this.n[i]="";
+                    }
+                }else if(this.n[i].search(Rex["***"])!=-1){
+                    if(this.n[i].match(Rex["***"])[0]==this.n[i]){//***=><hr> */
+                        var j=config.list["***"]?config.list["***"].replace(">","").replace("<",""):"hr";
+                        this.n[i]=`<${j}>`;
+                    }
+                }else if(this.n[i].search(Rex["___"])!=-1){
+                    if(this.n[i].match(Rex["___"])[0]==this.n[i]){//___=><hr> */
+                        var j=config.list["___"]?config.list["___"].replace(">","").replace("<",""):"hr";
+                        this.n[i]=`<${j}>`;
+                    }
+                }else if(i==0&&this.n[i]=="---"){
                     var j=config.list["---"]?config.list["---"].replace(">","").replace("<",""):"hr";
                     this.n[i]=`<${j}>`;
-                }
-            }else if(this.n[i].trim().replaceAll("=","")==""&&this.n[i].split("").filter(e=>e=="=").length>=3&&i>0){// === =><h1>
-                if(this.n[i-1]!=""&&this.n[i-1].search(/<h[1-9]{1}>/g)!=0){
-                    var j=config.list["==="]?config.list["==="].replace(">","").replace("<",""):"h1";
-                    this.n[i-1]=`<${j}>`+this.n[i-1]+`</${j.indexOf(" ")==-1?j:j.slice(0,j.indexOf(" "))}>`;
-                    this.n[i]="";
-                }
-            }else if(this.n[i].search(Rex["***"])!=-1){
-                if(this.n[i].match(Rex["***"])[0]==this.n[i]){//***=><hr> */
-                    var j=config.list["***"]?config.list["***"].replace(">","").replace("<",""):"hr";
-                    this.n[i]=`<${j}>`;
-                }
-            }else if(this.n[i].search(Rex["___"])!=-1){
-                if(this.n[i].match(Rex["___"])[0]==this.n[i]){//___=><hr> */
-                    var j=config.list["___"]?config.list["___"].replace(">","").replace("<",""):"hr";
-                    this.n[i]=`<${j}>`;
-                }
-            }else if(i==0&&this.n[i]=="---"){
-                var j=config.list["---"]?config.list["---"].replace(">","").replace("<",""):"hr";
-                this.n[i]=`<${j}>`;
-            }//[0]---=><hr>
-            else if(i==block_pre_make&&block_pre_make!=false){this.n[i]="</pre>";block_pre_make=false;}
+                }//[0]---=><hr>
+            }
+            if(i==block_pre_make&&block_pre_make!=false){this.n[i]="</pre>";block_pre_make=false;}
             else if(this.n[i].search(Rex["```"])==0&&i!=this.n.length&&!block_pre_make){
                 if(this.n[i].match(Rex["```"])==this.n[i]){
                     var o=[...this.n[i].matchAll(Rex["```"])][0][2];
@@ -302,9 +305,9 @@ class Femd{
                         if(this.n[g].match(/ {0,}`{3} {0,}/g)[0]==this.n[g]){
                             this.n[i]=this.n[i].match(/( |<[A-z \=\'\"]{1,}>){0,}`/g)[0].slice(0,-1)+`<pre class='${o?"pre "+o:"pre"}'>`;
                             block_pre_make=g;
-                            /*for(var y=i+1;y<g;y++){
-                                this.n[y]=toHTML_Str(this.n[y])+"\n"
-                            };*/
+                            for(var y=i+1;y<g;y++){
+                                this.n[y]=this.n[y].replaceAll(">","&#62;").replaceAll("<","&#60;")+"&#10;";/*toHTML_Str(this.n[y])+"\n"*/
+                            };
                             break
                         }
                     }
